@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>软路由安装初始化 | fiko&#39;s blog</title>
+<meta name="keywords" content="软路由, 教程, OpenWrt, Hyper-V">
+<meta name="description" content="软路由安装完整教程，专为计算机基础知识有限的用户编写，将一步步指导您完成软路由的安装配置。">
+<meta name="author" content="fiko">
+<link rel="canonical" href="https://faker2048.github.io/fiko/posts/%E8%BD%AF%E8%B7%AF%E7%94%B1%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96/">
+<link crossorigin="anonymous" href="/fiko/assets/css/stylesheet.36819bea596090d8b48cf10d9831382996197aa7e4fc86f792f7c08c9ca4d23b.css" integrity="sha256-NoGb6llgkNi0jPENmDE4KZYZeqfk/Ib3kvfAjJyk0js=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://faker2048.github.io/fiko/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://faker2048.github.io/fiko/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://faker2048.github.io/fiko/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://faker2048.github.io/fiko/apple-touch-icon.png">
+<link rel="mask-icon" href="https://faker2048.github.io/fiko/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://faker2048.github.io/fiko/posts/%E8%BD%AF%E8%B7%AF%E7%94%B1%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:url" content="https://faker2048.github.io/fiko/posts/%E8%BD%AF%E8%B7%AF%E7%94%B1%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96/">
+  <meta property="og:site_name" content="fiko&#39;s blog">
+  <meta property="og:title" content="软路由安装初始化">
+  <meta property="og:description" content="软路由安装完整教程，专为计算机基础知识有限的用户编写，将一步步指导您完成软路由的安装配置。">
+  <meta property="og:locale" content="zh-CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-06-24T08:28:32+08:00">
+    <meta property="article:modified_time" content="2025-06-24T08:28:32+08:00">
+    <meta property="article:tag" content="软路由">
+    <meta property="article:tag" content="教程">
+    <meta property="article:tag" content="OpenWrt">
+    <meta property="article:tag" content="Hyper-V">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="软路由安装初始化">
+<meta name="twitter:description" content="软路由安装完整教程，专为计算机基础知识有限的用户编写，将一步步指导您完成软路由的安装配置。">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://faker2048.github.io/fiko/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "软路由安装初始化",
+      "item": "https://faker2048.github.io/fiko/posts/%E8%BD%AF%E8%B7%AF%E7%94%B1%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "软路由安装初始化",
+  "name": "软路由安装初始化",
+  "description": "软路由安装完整教程，专为计算机基础知识有限的用户编写，将一步步指导您完成软路由的安装配置。",
+  "keywords": [
+    "软路由", "教程", "OpenWrt", "Hyper-V"
+  ],
+  "articleBody": "软路由安装完整教程 本教程专为计算机基础知识有限的用户编写，将一步步指导您完成软路由的安装配置。\n📋 准备工作 所需硬件 一台电脑：推荐至少4GB内存，双网卡（有线网卡） U盘：至少16GB容量，用于制作启动盘 网线：连接电脑和光猫/路由器 所需软件下载 Ventoy：用于制作启动盘\n下载地址：https://www.ventoy.net/cn/download.html 选择Windows版本下载 Windows Server 2022：服务器操作系统\n官方下载：https://www.microsoft.com/zh-cn/evalcenter/download-windows-server-2022 选择ISO文件下载 ImmortalWrt 23.05：路由器固件\n下载地址：https://downloads.immortalwrt.org/releases/23.05.4/targets/x86/64/ 选择：immortalwrt-23.05.4-x86-64-generic-ext4-combined.vhdx.gz（专为虚拟机优化） 🔧 第一步：使用Ventoy制作启动盘并安装Windows Server 2022 1.1 制作Ventoy启动盘 插入U盘到电脑，备份U盘中的重要数据（制作过程会格式化U盘）\n解压并运行Ventoy\n解压下载的Ventoy压缩包 双击运行 Ventoy2Disk.exe 如提示安全警告，选择\"允许\" 制作启动盘\n在Ventoy界面中选择您的U盘 点击\"安装\"按钮 确认格式化警告，点击\"确定\" 等待制作完成 复制系统镜像\n制作完成后，U盘会出现一个可访问的分区 将下载的Windows Server 2022 ISO文件复制到U盘 将下载的immortalwrt-23.05.4-x86-64-generic-ext4-combined.vhdx.gz也复制到U盘 1.2 安装Windows Server 2022 设置BIOS启动\n重启电脑，开机时按F2、F12或Del键进入BIOS（不同品牌按键不同） 找到\"Boot\"或\"启动\"选项 将U盘设为第一启动项 保存并退出BIOS 启动Ventoy\n电脑重启后会看到Ventoy启动菜单 选择\"Windows Server 2022\"镜像 按回车键开始安装 安装Windows Server 2022\n选择语言：中文（简体） 点击\"现在安装\" 选择版本：推荐\"Windows Server 2022 Standard（桌面体验）\" 接受许可条款 选择\"自定义：仅安装Windows\" 选择安装磁盘，点击\"下一步\" 等待安装完成（约30-60分钟） 初始配置\n安装完成后设置管理员密码（请记住此密码） 登录系统，完成基本设置 🖥️ 第二步：开启Hyper-V并创建虚拟机 2.1 启用Hyper-V功能 打开服务器管理器\n登录Windows Server后，服务器管理器会自动打开 如未打开，点击任务栏的\"服务器管理器\"图标 添加角色和功能\n在服务器管理器中，点击\"添加角色和功能\" 点击\"下一步\"直到\"服务器角色\"页面 勾选\"Hyper-V\" 系统会提示添加所需功能，点击\"添加功能\" 继续点击\"下一步\" 在\"功能\"页面，确保\"Hyper-V\"相关功能已选中 点击\"安装\"，等待安装完成 安装完成后，重启服务器 2.2 配置虚拟交换机 💡 重要概念：软路由需要两个网口，一个连接上级路由器/光猫（WAN口），一个连接内网设备（LAN口）。我们需要创建两个虚拟交换机来模拟这两个网口。\n打开Hyper-V管理器\n重启后，在开始菜单搜索\"Hyper-V管理器\"并打开 创建WAN虚拟交换机（连接外网）\n在右侧操作面板，点击\"虚拟交换机管理器\" 选择\"外部\"交换机类型 点击\"创建虚拟交换机\" 名称：输入\"WAN-Switch\" 连接类型：选择\"外部网络\"，选择连接到上级路由器/光猫的网卡 ✅ 勾选“允许管理操作系统共享此网络适配器” 点击\"确定\" 创建LAN虚拟交换机（连接内网）\n再次点击\"虚拟交换机管理器\" 选择\"外部\"交换机类型 点击\"创建虚拟交换机\" 名称：输入\"LAN-Switch\" 连接类型：选择\"外部网络\"，选择连接到内网的网卡（如果有第二块网卡） ❌ 不要勾选“允许管理操作系统共享此网络适配器” 点击\"确定\" 🔍 重要说明：\nWAN交换机共享：允许宿主机也能通过上级路由器上网，不会冲突 LAN交换机不共享：确保软路由完全控制内网，避免IP冲突和安全问题 网络隔离：宿主机通过WAN口上网，内网设备通过软路由的LAN口管理 ⚠️ 网卡需求：\n如果只有一块网卡：LAN-Switch设为\"内部\"类型 如果有两块网卡：WAN用第一块，LAN用第二块（推荐） 2.3 创建第二代虚拟机 新建虚拟机\n在Hyper-V管理器中，右键服务器名称 选择\"新建\" \u003e “虚拟机” 配置虚拟机基本信息\n名称：输入\"OpenWrt-Router\" 位置：使用默认位置 代系：选择\"第2代\"（重要！） 内存：分配至少512MB（推荐1GB） 网络连接：先选择\"WAN-Switch\"（稍后会添加第二个网卡） 虚拟硬盘：创建虚拟硬盘，大小8GB足够 点击\"完成\" 添加第二个网络适配器\n右键新创建的虚拟机，选择\"设置\" 点击\"添加硬件\" 选择\"网络适配器\"，点击\"添加\" 在新添加的网络适配器中，选择\"LAN-Switch\" 点击\"确定\" 关闭安全启动\n在虚拟机设置中，选择\"安全\" ❌ 取消勾选\"启用安全启动\" 点击\"确定\" 🔍 网卡配置总结：\n网络适配器1：连接到\"WAN-Switch\"，用作WAN口（连接上级网络） 网络适配器2：连接到\"LAN-Switch\"，用作LAN口（连接内网设备） 🌐 第三步：安装和配置OpenWrt系统 3.1 准备OpenWrt镜像 解压VHDX固件\n将U盘重新插入服务器 解压immortalwrt-23.05.4-x86-64-generic-ext4-combined.vhdx.gz文件 得到.vhdx虚拟硬盘文件（专为Hyper-V优化） 💡 优势说明：VHDX格式是微软专为Hyper-V虚拟机设计的格式，比IMG格式有更好的性能和兼容性，无需额外转换步骤。\n3.2 安装OpenWrt 替换虚拟硬盘\n在Hyper-V管理器中，右键\"OpenWrt-Router\"虚拟机 选择\"设置\" 选择\"SCSI控制器\" 点击现有的\"硬盘驱动器\" 点击\"浏览\"，选择解压得到的.vhdx文件 点击\"确定\" 💡 说明：VHDX文件本身就是一个完整的虚拟硬盘，包含了完整的OpenWrt系统，无需安装过程。\n启动虚拟机\n右键虚拟机，选择\"启动\" 双击虚拟机名称打开控制台窗口 OpenWrt会直接启动 等待系统启动\n系统会直接从VHDX文件启动（无需安装过程） 启动完成后会看到OpenWrt的命令行界面 出现类似 root@ImmortalWrt:~# 的提示符表示启动成功 3.3 网络接口配置 💡 关键步骤：需要根据网卡的MAC地址来正确分配WAN和LAN接口，这是软路由配置的核心！\n查看网络接口信息\nip addr show 会显示类似以下信息：\n2: eth0: mtu 1500 link/ether 00:15:5d:xx:xx:xx brd ff:ff:ff:ff:ff:ff 3: eth1: mtu 1500 link/ether 00:15:5d:yy:yy:yy brd ff:ff:ff:ff:ff:ff 记录下两个网卡的MAC地址（link/ether后面的地址）\n确定网卡对应关系\n回到Windows Server的Hyper-V管理器 右键虚拟机选择\"设置\" 查看每个网络适配器的\"MAC地址\" 第1个网络适配器（连接WAN-Switch）的MAC = WAN口 第2个网络适配器（连接LAN-Switch）的MAC = LAN口 编辑网络配置文件\nvi /etc/config/network 配置WAN和LAN接口 找到并修改网络配置（用实际的MAC地址替换示例中的地址）：\n# WAN接口配置（连接上级路由器） config interface 'wan' option ifname 'eth0' # 替换为WAN网卡对应的接口名 option proto 'dhcp' # 自动获取IP地址 # LAN接口配置（内网管理） config interface 'lan' option ifname 'eth1' # 替换为LAN网卡对应的接口名 option proto 'static' option ipaddr '192.168.10.1' # 软路由管理IP option netmask '255.255.255.0' option ip6assign '60' ⚠️ 重要说明：\n确保WAN接口使用连接到\"WAN-Switch\"的网卡 确保LAN接口使用连接到\"LAN-Switch\"的网卡 可以修改LAN的IP段（如192.168.10.1）避免与上级路由器冲突 重启网络服务\n/etc/init.d/network restart 启用Web管理界面\n/etc/init.d/uhttpd start /etc/init.d/uhttpd enable 检查配置是否生效\n# 查看接口状态 ip route show # 测试WAN连接 ping 8.8.8.8 🔗 第四步：访问和完善配置 4.1 首次登录Web界面 连接到LAN网络\n在Windows Server的网络设置中找到\"LAN-Switch\"对应的网络适配器 设置该适配器为自动获取IP地址，或手动设置为192.168.10.x网段 访问路由器管理界面\n在Windows Server的浏览器中访问：http://192.168.10.1 首次登录用户名：root，密码：空（直接点登录） 设置管理密码\n登录后立即设置管理员密码 进入\"System\" \u003e “Administration” 设置新密码并保存 🔍 网络连接说明：\nWAN口自动从上级路由器获取IP（如192.168.1.100） LAN口使用我们设置的IP（192.168.10.1） 内网设备连接到LAN网络，获取192.168.10.x的IP地址 4.2 Web界面网络配置详解 验证接口配置\n进入\"Network\" \u003e “Interfaces” 确认看到以下接口： WAN接口：显示为\"Connected\"，IP地址来自上级路由器 LAN接口：显示为\"Connected\"，IP地址为192.168.10.1 如果需要重新配置接口\n配置WAN接口：\n点击WAN接口的\"Edit\" Protocol: 选择\"DHCP client\"（自动获取IP） Physical Settings: 确保选择了正确的网卡（对应WAN-Switch的MAC地址） 点击\"Save \u0026 Apply\" 配置LAN接口：\n点击LAN接口的\"Edit\" Protocol: 选择\"Static address\" IPv4 address: 192.168.10.1 IPv4 netmask: 255.255.255.0 Physical Settings: 确保选择了正确的网卡（对应LAN-Switch的MAC地址） 点击\"Save \u0026 Apply\" 配置DHCP服务器\n进入\"Network\" \u003e “DHCP and DNS” 在\"Server Settings\"中找到LAN接口 设置DHCP地址池： Start: 192.168.10.100 Limit: 100（可分配100个IP地址） Lease time: 12h 点击\"Save \u0026 Apply\" 配置防火墙规则\n进入\"Network\" \u003e “Firewall”\n确认\"Zone Forwardings\"中有：\nFrom: lan To: wan Action: ACCEPT 这允许内网设备通过WAN接口访问互联网\n🔍 完整网络架构：\n互联网 ↕ [上级路由器/光猫] (192.168.1.1) ↕ [物理网卡1] ← WAN-Switch(共享) → [Windows Server] (192.168.1.100) ↕ ↕ [软路由WAN口] (192.168.1.101) 管理和上网 ↕ [软路由系统] OpenWrt ↕ [软路由LAN口] (192.168.10.1) ↕ [物理网卡2] ← LAN-Switch(不共享) ↕ [内网设备] (192.168.10.100-200) 网络隔离优势：\n宿主机和软路由都能独立上网 内网完全由软路由控制，无IP冲突 管理更清晰，故障排除更容易 4.3 测试网络连通性 测试内网连接\n用另一台设备连接到软路由 检查是否能获取IP地址 测试外网连接\n在连接的设备上测试是否能访问互联网 ⚠️ 重要注意事项 安全提醒 🔐 务必为所有账户设置强密码 🔄 定期更新系统和固件 🚫 不要在生产环境中使用默认密码 故障排除 虚拟化相关：\n无法启动虚拟机：检查BIOS是否启用虚拟化技术（Intel VT-x或AMD-V） 性能问题：确保宿主机有足够的内存和CPU资源 网络配置相关：\n无法访问管理界面：\n检查Windows Server是否连接到LAN-Switch网络 确认LAN接口IP设置正确（192.168.10.1） 尝试用命令行ping 192.168.10.1测试连通性 WAN口无法获取IP：\n检查WAN-Switch是否连接到正确的物理网卡 确认上级路由器/光猫工作正常 在OpenWrt中查看WAN接口状态 内网设备无法上网：\n检查防火墙规则是否允许lan到wan的转发 确认DHCP服务器是否正常工作 检查DNS设置（可使用8.8.8.8） IP地址冲突：\n确认LAN-Switch没有开启\"允许管理操作系统共享\" 检查宿主机和软路由是否在不同网段 软路由LAN口应使用独立网段（如192.168.10.x） 网卡对应错误：\n使用ip addr show查看MAC地址 在Hyper-V中核对虚拟网卡的MAC地址 重新编辑/etc/config/network文件 常用调试命令：\n# 查看接口状态 ip addr show # 查看路由表 ip route show # 测试网络连通性 ping 8.8.8.8 # 查看防火墙状态 iptables -L # 重启网络服务 /etc/init.d/network restart 备份建议 📁 定期备份虚拟机文件 ⚙️ 导出OpenWrt配置文件 💾 保存重要的网络配置信息 🎯 第五步：后续优化（可选） 性能优化\n调整虚拟机内存分配 优化网络驱动设置 功能扩展\n安装额外的OpenWrt插件 配置高级网络功能 监控管理\n设置系统监控 配置日志记录 📞 获取帮助 如果在安装过程中遇到问题，可以：\n查看OpenWrt官方文档 访问相关技术论坛 寻求专业技术支持 恭喜！您已经完成了软路由的基本安装配置。现在可以享受自定义路由器带来的强大功能了！ 🎉\n",
+  "wordCount" : "517",
+  "inLanguage": "en",
+  "datePublished": "2025-06-24T08:28:32+08:00",
+  "dateModified": "2025-06-24T08:28:32+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "fiko"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://faker2048.github.io/fiko/posts/%E8%BD%AF%E8%B7%AF%E7%94%B1%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E5%8C%96/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "fiko's blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://faker2048.github.io/fiko/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://faker2048.github.io/fiko/" accesskey="h" title="fiko&#39;s blog (Alt + H)">fiko&#39;s blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://faker2048.github.io/fiko/posts/" title="posts">
+                    <span>posts</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      软路由安装初始化
+    </h1>
+    <div class="post-description">
+      软路由安装完整教程，专为计算机基础知识有限的用户编写，将一步步指导您完成软路由的安装配置。
+    </div>
+    <div class="post-meta"><span title='2025-06-24 08:28:32 +0800 +08'>June 24, 2025</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;fiko
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="软路由安装完整教程">软路由安装完整教程<a hidden class="anchor" aria-hidden="true" href="#软路由安装完整教程">#</a></h1>
+<blockquote>
+<p>本教程专为计算机基础知识有限的用户编写，将一步步指导您完成软路由的安装配置。</p></blockquote>
+<h2 id="-准备工作">📋 准备工作<a hidden class="anchor" aria-hidden="true" href="#-准备工作">#</a></h2>
+<h3 id="所需硬件">所需硬件<a hidden class="anchor" aria-hidden="true" href="#所需硬件">#</a></h3>
+<ul>
+<li><strong>一台电脑</strong>：推荐至少4GB内存，双网卡（有线网卡）</li>
+<li><strong>U盘</strong>：至少16GB容量，用于制作启动盘</li>
+<li><strong>网线</strong>：连接电脑和光猫/路由器</li>
+</ul>
+<h3 id="所需软件下载">所需软件下载<a hidden class="anchor" aria-hidden="true" href="#所需软件下载">#</a></h3>
+<ol>
+<li>
+<p><strong>Ventoy</strong>：用于制作启动盘</p>
+<ul>
+<li>下载地址：https://www.ventoy.net/cn/download.html</li>
+<li>选择Windows版本下载</li>
+</ul>
+</li>
+<li>
+<p><strong>Windows Server 2022</strong>：服务器操作系统</p>
+<ul>
+<li>官方下载：https://www.microsoft.com/zh-cn/evalcenter/download-windows-server-2022</li>
+<li>选择ISO文件下载</li>
+</ul>
+</li>
+<li>
+<p><strong>ImmortalWrt 23.05</strong>：路由器固件</p>
+<ul>
+<li>下载地址：https://downloads.immortalwrt.org/releases/23.05.4/targets/x86/64/</li>
+<li>选择：immortalwrt-23.05.4-x86-64-generic-ext4-combined.vhdx.gz（专为虚拟机优化）</li>
+</ul>
+</li>
+</ol>
+<h2 id="-第一步使用ventoy制作启动盘并安装windows-server-2022">🔧 第一步：使用Ventoy制作启动盘并安装Windows Server 2022<a hidden class="anchor" aria-hidden="true" href="#-第一步使用ventoy制作启动盘并安装windows-server-2022">#</a></h2>
+<h3 id="11-制作ventoy启动盘">1.1 制作Ventoy启动盘<a hidden class="anchor" aria-hidden="true" href="#11-制作ventoy启动盘">#</a></h3>
+<ol>
+<li>
+<p><strong>插入U盘</strong>到电脑，备份U盘中的重要数据（制作过程会格式化U盘）</p>
+</li>
+<li>
+<p><strong>解压并运行Ventoy</strong></p>
+<ul>
+<li>解压下载的Ventoy压缩包</li>
+<li>双击运行 <code>Ventoy2Disk.exe</code></li>
+<li>如提示安全警告，选择&quot;允许&quot;</li>
+</ul>
+</li>
+<li>
+<p><strong>制作启动盘</strong></p>
+<ul>
+<li>在Ventoy界面中选择您的U盘</li>
+<li>点击&quot;安装&quot;按钮</li>
+<li>确认格式化警告，点击&quot;确定&quot;</li>
+<li>等待制作完成</li>
+</ul>
+</li>
+<li>
+<p><strong>复制系统镜像</strong></p>
+<ul>
+<li>制作完成后，U盘会出现一个可访问的分区</li>
+<li>将下载的<code>Windows Server 2022 ISO文件</code>复制到U盘</li>
+<li>将下载的<code>immortalwrt-23.05.4-x86-64-generic-ext4-combined.vhdx.gz</code>也复制到U盘</li>
+</ul>
+</li>
+</ol>
+<h3 id="12-安装windows-server-2022">1.2 安装Windows Server 2022<a hidden class="anchor" aria-hidden="true" href="#12-安装windows-server-2022">#</a></h3>
+<ol>
+<li>
+<p><strong>设置BIOS启动</strong></p>
+<ul>
+<li>重启电脑，开机时按<code>F2</code>、<code>F12</code>或<code>Del</code>键进入BIOS（不同品牌按键不同）</li>
+<li>找到&quot;Boot&quot;或&quot;启动&quot;选项</li>
+<li>将U盘设为第一启动项</li>
+<li>保存并退出BIOS</li>
+</ul>
+</li>
+<li>
+<p><strong>启动Ventoy</strong></p>
+<ul>
+<li>电脑重启后会看到Ventoy启动菜单</li>
+<li>选择&quot;Windows Server 2022&quot;镜像</li>
+<li>按回车键开始安装</li>
+</ul>
+</li>
+<li>
+<p><strong>安装Windows Server 2022</strong></p>
+<ul>
+<li>选择语言：中文（简体）</li>
+<li>点击&quot;现在安装&quot;</li>
+<li>选择版本：推荐&quot;Windows Server 2022 Standard（桌面体验）&quot;</li>
+<li>接受许可条款</li>
+<li>选择&quot;自定义：仅安装Windows&quot;</li>
+<li>选择安装磁盘，点击&quot;下一步&quot;</li>
+<li>等待安装完成（约30-60分钟）</li>
+</ul>
+</li>
+<li>
+<p><strong>初始配置</strong></p>
+<ul>
+<li>安装完成后设置管理员密码（请记住此密码）</li>
+<li>登录系统，完成基本设置</li>
+</ul>
+</li>
+</ol>
+<h2 id="-第二步开启hyper-v并创建虚拟机">🖥️ 第二步：开启Hyper-V并创建虚拟机<a hidden class="anchor" aria-hidden="true" href="#-第二步开启hyper-v并创建虚拟机">#</a></h2>
+<h3 id="21-启用hyper-v功能">2.1 启用Hyper-V功能<a hidden class="anchor" aria-hidden="true" href="#21-启用hyper-v功能">#</a></h3>
+<ol>
+<li>
+<p><strong>打开服务器管理器</strong></p>
+<ul>
+<li>登录Windows Server后，服务器管理器会自动打开</li>
+<li>如未打开，点击任务栏的&quot;服务器管理器&quot;图标</li>
+</ul>
+</li>
+<li>
+<p><strong>添加角色和功能</strong></p>
+<ul>
+<li>在服务器管理器中，点击&quot;添加角色和功能&quot;</li>
+<li>点击&quot;下一步&quot;直到&quot;服务器角色&quot;页面</li>
+<li>勾选&quot;Hyper-V&quot;</li>
+<li>系统会提示添加所需功能，点击&quot;添加功能&quot;</li>
+<li>继续点击&quot;下一步&quot;</li>
+<li>在&quot;功能&quot;页面，确保&quot;Hyper-V&quot;相关功能已选中</li>
+<li>点击&quot;安装&quot;，等待安装完成</li>
+<li>安装完成后，重启服务器</li>
+</ul>
+</li>
+</ol>
+<h3 id="22-配置虚拟交换机">2.2 配置虚拟交换机<a hidden class="anchor" aria-hidden="true" href="#22-配置虚拟交换机">#</a></h3>
+<blockquote>
+<p>💡 <strong>重要概念</strong>：软路由需要两个网口，一个连接上级路由器/光猫（WAN口），一个连接内网设备（LAN口）。我们需要创建两个虚拟交换机来模拟这两个网口。</p></blockquote>
+<ol>
+<li>
+<p><strong>打开Hyper-V管理器</strong></p>
+<ul>
+<li>重启后，在开始菜单搜索&quot;Hyper-V管理器&quot;并打开</li>
+</ul>
+</li>
+<li>
+<p><strong>创建WAN虚拟交换机（连接外网）</strong></p>
+<ul>
+<li>在右侧操作面板，点击&quot;虚拟交换机管理器&quot;</li>
+<li>选择&quot;外部&quot;交换机类型</li>
+<li>点击&quot;创建虚拟交换机&quot;</li>
+<li><strong>名称</strong>：输入&quot;WAN-Switch&quot;</li>
+<li><strong>连接类型</strong>：选择&quot;外部网络&quot;，选择连接到上级路由器/光猫的网卡</li>
+<li>✅ <strong>勾选</strong>&ldquo;允许管理操作系统共享此网络适配器&rdquo;</li>
+<li>点击&quot;确定&quot;</li>
+</ul>
+</li>
+<li>
+<p><strong>创建LAN虚拟交换机（连接内网）</strong></p>
+<ul>
+<li>再次点击&quot;虚拟交换机管理器&quot;</li>
+<li>选择&quot;外部&quot;交换机类型</li>
+<li>点击&quot;创建虚拟交换机&quot;</li>
+<li><strong>名称</strong>：输入&quot;LAN-Switch&quot;</li>
+<li><strong>连接类型</strong>：选择&quot;外部网络&quot;，选择连接到内网的网卡（如果有第二块网卡）</li>
+<li>❌ <strong>不要勾选</strong>&ldquo;允许管理操作系统共享此网络适配器&rdquo;</li>
+<li>点击&quot;确定&quot;</li>
+</ul>
+<blockquote>
+<p>🔍 <strong>重要说明</strong>：</p>
+<ul>
+<li><strong>WAN交换机共享</strong>：允许宿主机也能通过上级路由器上网，不会冲突</li>
+<li><strong>LAN交换机不共享</strong>：确保软路由完全控制内网，避免IP冲突和安全问题</li>
+<li><strong>网络隔离</strong>：宿主机通过WAN口上网，内网设备通过软路由的LAN口管理</li>
+</ul></blockquote>
+<blockquote>
+<p>⚠️ <strong>网卡需求</strong>：</p>
+<ul>
+<li>如果只有一块网卡：LAN-Switch设为&quot;内部&quot;类型</li>
+<li>如果有两块网卡：WAN用第一块，LAN用第二块（推荐）</li>
+</ul></blockquote>
+</li>
+</ol>
+<h3 id="23-创建第二代虚拟机">2.3 创建第二代虚拟机<a hidden class="anchor" aria-hidden="true" href="#23-创建第二代虚拟机">#</a></h3>
+<ol>
+<li>
+<p><strong>新建虚拟机</strong></p>
+<ul>
+<li>在Hyper-V管理器中，右键服务器名称</li>
+<li>选择&quot;新建&quot; &gt; &ldquo;虚拟机&rdquo;</li>
+</ul>
+</li>
+<li>
+<p><strong>配置虚拟机基本信息</strong></p>
+<ul>
+<li><strong>名称</strong>：输入&quot;OpenWrt-Router&quot;</li>
+<li><strong>位置</strong>：使用默认位置</li>
+<li><strong>代系</strong>：选择&quot;第2代&quot;（重要！）</li>
+<li><strong>内存</strong>：分配至少512MB（推荐1GB）</li>
+<li><strong>网络连接</strong>：先选择&quot;WAN-Switch&quot;（稍后会添加第二个网卡）</li>
+<li><strong>虚拟硬盘</strong>：创建虚拟硬盘，大小8GB足够</li>
+<li>点击&quot;完成&quot;</li>
+</ul>
+</li>
+<li>
+<p><strong>添加第二个网络适配器</strong></p>
+<ul>
+<li>右键新创建的虚拟机，选择&quot;设置&quot;</li>
+<li>点击&quot;添加硬件&quot;</li>
+<li>选择&quot;网络适配器&quot;，点击&quot;添加&quot;</li>
+<li>在新添加的网络适配器中，选择&quot;LAN-Switch&quot;</li>
+<li>点击&quot;确定&quot;</li>
+</ul>
+</li>
+<li>
+<p><strong>关闭安全启动</strong></p>
+<ul>
+<li>在虚拟机设置中，选择&quot;安全&quot;</li>
+<li>❌ 取消勾选&quot;启用安全启动&quot;</li>
+<li>点击&quot;确定&quot;</li>
+</ul>
+<blockquote>
+<p>🔍 <strong>网卡配置总结</strong>：</p>
+<ul>
+<li><strong>网络适配器1</strong>：连接到&quot;WAN-Switch&quot;，用作WAN口（连接上级网络）</li>
+<li><strong>网络适配器2</strong>：连接到&quot;LAN-Switch&quot;，用作LAN口（连接内网设备）</li>
+</ul></blockquote>
+</li>
+</ol>
+<h2 id="-第三步安装和配置openwrt系统">🌐 第三步：安装和配置OpenWrt系统<a hidden class="anchor" aria-hidden="true" href="#-第三步安装和配置openwrt系统">#</a></h2>
+<h3 id="31-准备openwrt镜像">3.1 准备OpenWrt镜像<a hidden class="anchor" aria-hidden="true" href="#31-准备openwrt镜像">#</a></h3>
+<ol>
+<li>
+<p><strong>解压VHDX固件</strong></p>
+<ul>
+<li>将U盘重新插入服务器</li>
+<li>解压<code>immortalwrt-23.05.4-x86-64-generic-ext4-combined.vhdx.gz</code>文件</li>
+<li>得到<code>.vhdx</code>虚拟硬盘文件（专为Hyper-V优化）</li>
+</ul>
+<blockquote>
+<p>💡 <strong>优势说明</strong>：VHDX格式是微软专为Hyper-V虚拟机设计的格式，比IMG格式有更好的性能和兼容性，无需额外转换步骤。</p></blockquote>
+</li>
+</ol>
+<h3 id="32-安装openwrt">3.2 安装OpenWrt<a hidden class="anchor" aria-hidden="true" href="#32-安装openwrt">#</a></h3>
+<ol>
+<li>
+<p><strong>替换虚拟硬盘</strong></p>
+<ul>
+<li>在Hyper-V管理器中，右键&quot;OpenWrt-Router&quot;虚拟机</li>
+<li>选择&quot;设置&quot;</li>
+<li>选择&quot;SCSI控制器&quot;</li>
+<li>点击现有的&quot;硬盘驱动器&quot;</li>
+<li>点击&quot;浏览&quot;，选择解压得到的<code>.vhdx</code>文件</li>
+<li>点击&quot;确定&quot;</li>
+</ul>
+<blockquote>
+<p>💡 <strong>说明</strong>：VHDX文件本身就是一个完整的虚拟硬盘，包含了完整的OpenWrt系统，无需安装过程。</p></blockquote>
+</li>
+<li>
+<p><strong>启动虚拟机</strong></p>
+<ul>
+<li>右键虚拟机，选择&quot;启动&quot;</li>
+<li>双击虚拟机名称打开控制台窗口</li>
+<li>OpenWrt会直接启动</li>
+</ul>
+</li>
+<li>
+<p><strong>等待系统启动</strong></p>
+<ul>
+<li>系统会直接从VHDX文件启动（无需安装过程）</li>
+<li>启动完成后会看到OpenWrt的命令行界面</li>
+<li>出现类似 <code>root@ImmortalWrt:~#</code> 的提示符表示启动成功</li>
+</ul>
+</li>
+</ol>
+<h3 id="33-网络接口配置">3.3 网络接口配置<a hidden class="anchor" aria-hidden="true" href="#33-网络接口配置">#</a></h3>
+<blockquote>
+<p>💡 <strong>关键步骤</strong>：需要根据网卡的MAC地址来正确分配WAN和LAN接口，这是软路由配置的核心！</p></blockquote>
+<ol>
+<li>
+<p><strong>查看网络接口信息</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ip addr show
+</span></span></code></pre></div><p>会显示类似以下信息：</p>
+<pre tabindex="0"><code>2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500
+    link/ether 00:15:5d:xx:xx:xx brd ff:ff:ff:ff:ff:ff
+3: eth1: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500
+    link/ether 00:15:5d:yy:yy:yy brd ff:ff:ff:ff:ff:ff
+</code></pre><p><strong>记录下两个网卡的MAC地址</strong>（link/ether后面的地址）</p>
+</li>
+<li>
+<p><strong>确定网卡对应关系</strong></p>
+<ul>
+<li>回到Windows Server的Hyper-V管理器</li>
+<li>右键虚拟机选择&quot;设置&quot;</li>
+<li>查看每个网络适配器的&quot;MAC地址&quot;</li>
+<li><strong>第1个网络适配器</strong>（连接WAN-Switch）的MAC = WAN口</li>
+<li><strong>第2个网络适配器</strong>（连接LAN-Switch）的MAC = LAN口</li>
+</ul>
+</li>
+<li>
+<p><strong>编辑网络配置文件</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vi /etc/config/network
+</span></span></code></pre></div></li>
+<li>
+<p><strong>配置WAN和LAN接口</strong>
+找到并修改网络配置（用实际的MAC地址替换示例中的地址）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># WAN接口配置（连接上级路由器）</span>
+</span></span><span style="display:flex;"><span>config interface <span style="color:#e6db74">&#39;wan&#39;</span>
+</span></span><span style="display:flex;"><span>    option ifname <span style="color:#e6db74">&#39;eth0&#39;</span>  <span style="color:#75715e"># 替换为WAN网卡对应的接口名</span>
+</span></span><span style="display:flex;"><span>    option proto <span style="color:#e6db74">&#39;dhcp&#39;</span>   <span style="color:#75715e"># 自动获取IP地址</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># LAN接口配置（内网管理）</span>
+</span></span><span style="display:flex;"><span>config interface <span style="color:#e6db74">&#39;lan&#39;</span>
+</span></span><span style="display:flex;"><span>    option ifname <span style="color:#e6db74">&#39;eth1&#39;</span>  <span style="color:#75715e"># 替换为LAN网卡对应的接口名</span>
+</span></span><span style="display:flex;"><span>    option proto <span style="color:#e6db74">&#39;static&#39;</span>
+</span></span><span style="display:flex;"><span>    option ipaddr <span style="color:#e6db74">&#39;192.168.10.1&#39;</span>    <span style="color:#75715e"># 软路由管理IP</span>
+</span></span><span style="display:flex;"><span>    option netmask <span style="color:#e6db74">&#39;255.255.255.0&#39;</span>
+</span></span><span style="display:flex;"><span>    option ip6assign <span style="color:#e6db74">&#39;60&#39;</span>
+</span></span></code></pre></div><blockquote>
+<p>⚠️ <strong>重要说明</strong>：</p>
+<ul>
+<li>确保WAN接口使用连接到&quot;WAN-Switch&quot;的网卡</li>
+<li>确保LAN接口使用连接到&quot;LAN-Switch&quot;的网卡</li>
+<li>可以修改LAN的IP段（如192.168.10.1）避免与上级路由器冲突</li>
+</ul></blockquote>
+</li>
+<li>
+<p><strong>重启网络服务</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/etc/init.d/network restart
+</span></span></code></pre></div></li>
+<li>
+<p><strong>启用Web管理界面</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/etc/init.d/uhttpd start
+</span></span><span style="display:flex;"><span>/etc/init.d/uhttpd enable
+</span></span></code></pre></div></li>
+<li>
+<p><strong>检查配置是否生效</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 查看接口状态</span>
+</span></span><span style="display:flex;"><span>ip route show
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 测试WAN连接</span>
+</span></span><span style="display:flex;"><span>ping 8.8.8.8
+</span></span></code></pre></div></li>
+</ol>
+<h2 id="-第四步访问和完善配置">🔗 第四步：访问和完善配置<a hidden class="anchor" aria-hidden="true" href="#-第四步访问和完善配置">#</a></h2>
+<h3 id="41-首次登录web界面">4.1 首次登录Web界面<a hidden class="anchor" aria-hidden="true" href="#41-首次登录web界面">#</a></h3>
+<ol>
+<li>
+<p><strong>连接到LAN网络</strong></p>
+<ul>
+<li>在Windows Server的网络设置中找到&quot;LAN-Switch&quot;对应的网络适配器</li>
+<li>设置该适配器为自动获取IP地址，或手动设置为192.168.10.x网段</li>
+</ul>
+</li>
+<li>
+<p><strong>访问路由器管理界面</strong></p>
+<ul>
+<li>在Windows Server的浏览器中访问：<code>http://192.168.10.1</code></li>
+<li>首次登录用户名：<code>root</code>，密码：空（直接点登录）</li>
+</ul>
+</li>
+<li>
+<p><strong>设置管理密码</strong></p>
+<ul>
+<li>登录后立即设置管理员密码</li>
+<li>进入&quot;System&quot; &gt; &ldquo;Administration&rdquo;</li>
+<li>设置新密码并保存</li>
+</ul>
+<blockquote>
+<p>🔍 <strong>网络连接说明</strong>：</p>
+<ul>
+<li>WAN口自动从上级路由器获取IP（如192.168.1.100）</li>
+<li>LAN口使用我们设置的IP（192.168.10.1）</li>
+<li>内网设备连接到LAN网络，获取192.168.10.x的IP地址</li>
+</ul></blockquote>
+</li>
+</ol>
+<h3 id="42-web界面网络配置详解">4.2 Web界面网络配置详解<a hidden class="anchor" aria-hidden="true" href="#42-web界面网络配置详解">#</a></h3>
+<ol>
+<li>
+<p><strong>验证接口配置</strong></p>
+<ul>
+<li>进入&quot;Network&quot; &gt; &ldquo;Interfaces&rdquo;</li>
+<li>确认看到以下接口：
+<ul>
+<li><strong>WAN接口</strong>：显示为&quot;Connected&quot;，IP地址来自上级路由器</li>
+<li><strong>LAN接口</strong>：显示为&quot;Connected&quot;，IP地址为192.168.10.1</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>如果需要重新配置接口</strong></p>
+<p><strong>配置WAN接口</strong>：</p>
+<ul>
+<li>点击WAN接口的&quot;Edit&quot;</li>
+<li><strong>Protocol</strong>: 选择&quot;DHCP client&quot;（自动获取IP）</li>
+<li><strong>Physical Settings</strong>: 确保选择了正确的网卡（对应WAN-Switch的MAC地址）</li>
+<li>点击&quot;Save &amp; Apply&quot;</li>
+</ul>
+<p><strong>配置LAN接口</strong>：</p>
+<ul>
+<li>点击LAN接口的&quot;Edit&quot;</li>
+<li><strong>Protocol</strong>: 选择&quot;Static address&quot;</li>
+<li><strong>IPv4 address</strong>: 192.168.10.1</li>
+<li><strong>IPv4 netmask</strong>: 255.255.255.0</li>
+<li><strong>Physical Settings</strong>: 确保选择了正确的网卡（对应LAN-Switch的MAC地址）</li>
+<li>点击&quot;Save &amp; Apply&quot;</li>
+</ul>
+</li>
+<li>
+<p><strong>配置DHCP服务器</strong></p>
+<ul>
+<li>进入&quot;Network&quot; &gt; &ldquo;DHCP and DNS&rdquo;</li>
+<li>在&quot;Server Settings&quot;中找到LAN接口</li>
+<li>设置DHCP地址池：
+<ul>
+<li><strong>Start</strong>: 192.168.10.100</li>
+<li><strong>Limit</strong>: 100（可分配100个IP地址）</li>
+<li><strong>Lease time</strong>: 12h</li>
+</ul>
+</li>
+<li>点击&quot;Save &amp; Apply&quot;</li>
+</ul>
+</li>
+<li>
+<p><strong>配置防火墙规则</strong></p>
+<ul>
+<li>
+<p>进入&quot;Network&quot; &gt; &ldquo;Firewall&rdquo;</p>
+</li>
+<li>
+<p>确认&quot;Zone Forwardings&quot;中有：</p>
+<ul>
+<li><strong>From</strong>: lan <strong>To</strong>: wan <strong>Action</strong>: ACCEPT</li>
+</ul>
+</li>
+<li>
+<p>这允许内网设备通过WAN接口访问互联网</p>
+<blockquote>
+<p>🔍 <strong>完整网络架构</strong>：</p></blockquote>
+</li>
+</ul>
+<blockquote>
+<pre tabindex="0"><code>互联网
+  ↕
+[上级路由器/光猫] (192.168.1.1)
+  ↕
+[物理网卡1] ← WAN-Switch(共享) → [Windows Server] (192.168.1.100)
+  ↕                                      ↕
+[软路由WAN口] (192.168.1.101)          管理和上网
+  ↕
+[软路由系统] OpenWrt
+  ↕
+[软路由LAN口] (192.168.10.1)
+  ↕
+[物理网卡2] ← LAN-Switch(不共享)
+  ↕
+[内网设备] (192.168.10.100-200)
+</code></pre><p><strong>网络隔离优势</strong>：</p>
+<ul>
+<li>宿主机和软路由都能独立上网</li>
+<li>内网完全由软路由控制，无IP冲突</li>
+<li>管理更清晰，故障排除更容易</li>
+</ul></blockquote>
+</li>
+</ol>
+<h3 id="43-测试网络连通性">4.3 测试网络连通性<a hidden class="anchor" aria-hidden="true" href="#43-测试网络连通性">#</a></h3>
+<ol>
+<li>
+<p><strong>测试内网连接</strong></p>
+<ul>
+<li>用另一台设备连接到软路由</li>
+<li>检查是否能获取IP地址</li>
+</ul>
+</li>
+<li>
+<p><strong>测试外网连接</strong></p>
+<ul>
+<li>在连接的设备上测试是否能访问互联网</li>
+</ul>
+</li>
+</ol>
+<h2 id="-重要注意事项">⚠️ 重要注意事项<a hidden class="anchor" aria-hidden="true" href="#-重要注意事项">#</a></h2>
+<h3 id="安全提醒">安全提醒<a hidden class="anchor" aria-hidden="true" href="#安全提醒">#</a></h3>
+<ul>
+<li>🔐 务必为所有账户设置强密码</li>
+<li>🔄 定期更新系统和固件</li>
+<li>🚫 不要在生产环境中使用默认密码</li>
+</ul>
+<h3 id="故障排除">故障排除<a hidden class="anchor" aria-hidden="true" href="#故障排除">#</a></h3>
+<p><strong>虚拟化相关</strong>：</p>
+<ul>
+<li><strong>无法启动虚拟机</strong>：检查BIOS是否启用虚拟化技术（Intel VT-x或AMD-V）</li>
+<li><strong>性能问题</strong>：确保宿主机有足够的内存和CPU资源</li>
+</ul>
+<p><strong>网络配置相关</strong>：</p>
+<ul>
+<li>
+<p><strong>无法访问管理界面</strong>：</p>
+<ul>
+<li>检查Windows Server是否连接到LAN-Switch网络</li>
+<li>确认LAN接口IP设置正确（192.168.10.1）</li>
+<li>尝试用命令行ping 192.168.10.1测试连通性</li>
+</ul>
+</li>
+<li>
+<p><strong>WAN口无法获取IP</strong>：</p>
+<ul>
+<li>检查WAN-Switch是否连接到正确的物理网卡</li>
+<li>确认上级路由器/光猫工作正常</li>
+<li>在OpenWrt中查看WAN接口状态</li>
+</ul>
+</li>
+<li>
+<p><strong>内网设备无法上网</strong>：</p>
+<ul>
+<li>检查防火墙规则是否允许lan到wan的转发</li>
+<li>确认DHCP服务器是否正常工作</li>
+<li>检查DNS设置（可使用8.8.8.8）</li>
+</ul>
+</li>
+<li>
+<p><strong>IP地址冲突</strong>：</p>
+<ul>
+<li>确认LAN-Switch没有开启&quot;允许管理操作系统共享&quot;</li>
+<li>检查宿主机和软路由是否在不同网段</li>
+<li>软路由LAN口应使用独立网段（如192.168.10.x）</li>
+</ul>
+</li>
+<li>
+<p><strong>网卡对应错误</strong>：</p>
+<ul>
+<li>使用<code>ip addr show</code>查看MAC地址</li>
+<li>在Hyper-V中核对虚拟网卡的MAC地址</li>
+<li>重新编辑/etc/config/network文件</li>
+</ul>
+</li>
+</ul>
+<p><strong>常用调试命令</strong>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 查看接口状态</span>
+</span></span><span style="display:flex;"><span>ip addr show
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 查看路由表</span>
+</span></span><span style="display:flex;"><span>ip route show
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 测试网络连通性</span>
+</span></span><span style="display:flex;"><span>ping 8.8.8.8
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 查看防火墙状态</span>
+</span></span><span style="display:flex;"><span>iptables -L
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 重启网络服务</span>
+</span></span><span style="display:flex;"><span>/etc/init.d/network restart
+</span></span></code></pre></div><h3 id="备份建议">备份建议<a hidden class="anchor" aria-hidden="true" href="#备份建议">#</a></h3>
+<ul>
+<li>📁 定期备份虚拟机文件</li>
+<li>⚙️ 导出OpenWrt配置文件</li>
+<li>💾 保存重要的网络配置信息</li>
+</ul>
+<h2 id="-第五步后续优化可选">🎯 第五步：后续优化（可选）<a hidden class="anchor" aria-hidden="true" href="#-第五步后续优化可选">#</a></h2>
+<ol>
+<li>
+<p><strong>性能优化</strong></p>
+<ul>
+<li>调整虚拟机内存分配</li>
+<li>优化网络驱动设置</li>
+</ul>
+</li>
+<li>
+<p><strong>功能扩展</strong></p>
+<ul>
+<li>安装额外的OpenWrt插件</li>
+<li>配置高级网络功能</li>
+</ul>
+</li>
+<li>
+<p><strong>监控管理</strong></p>
+<ul>
+<li>设置系统监控</li>
+<li>配置日志记录</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="-获取帮助">📞 获取帮助<a hidden class="anchor" aria-hidden="true" href="#-获取帮助">#</a></h2>
+<p>如果在安装过程中遇到问题，可以：</p>
+<ul>
+<li>查看OpenWrt官方文档</li>
+<li>访问相关技术论坛</li>
+<li>寻求专业技术支持</li>
+</ul>
+<p><strong>恭喜！您已经完成了软路由的基本安装配置。现在可以享受自定义路由器带来的强大功能了！</strong> 🎉</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://faker2048.github.io/fiko/tags/%E8%BD%AF%E8%B7%AF%E7%94%B1/">软路由</a></li>
+      <li><a href="https://faker2048.github.io/fiko/tags/%E6%95%99%E7%A8%8B/">教程</a></li>
+      <li><a href="https://faker2048.github.io/fiko/tags/openwrt/">OpenWrt</a></li>
+      <li><a href="https://faker2048.github.io/fiko/tags/hyper-v/">Hyper-V</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2025 <a href="https://faker2048.github.io/fiko/">fiko&#39;s blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>
