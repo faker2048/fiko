@@ -1,0 +1,16 @@
+baseURL = "https://faker2048.github.io/fiko"
+languageCode = "zh-CN"
+title = "fiko's blog"
+theme = "PaperMod"
+
+[params]
+  author = "fiko"
+  defaultTheme = "auto"
+  showReadingTime = true
+
+[menu]
+  [[menu.main]]
+    identifier = "posts"
+    name = "posts"
+    url = "/posts/"
+    weight = 1
