@@ -1,6 +1,5 @@
 # Hugo generated files
-public/
-resources/
+
 
 # Hugo cache directory
 .hugo_build.lock
